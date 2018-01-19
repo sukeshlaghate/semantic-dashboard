@@ -17,6 +17,7 @@ import {
 import "./menulayout.css";
 
 import GeoBISearch from "./geobisearch";
+import UserDetails from "./userdetails";
 
 const fixedMenuStyle = {
   backgroundColor: "#fff",
@@ -27,7 +28,11 @@ const fixedMenuStyle = {
 export default class MenuLayout extends Component {
   constructor(props) {
     super(props);
-    this.state = { activeItem: "inbox", sidebarExpanded: false };
+    this.state = {
+      activeItem: "inbox",
+      sidebarExpanded: false,
+      username: "John Doe"
+    };
   }
 
   handleItemClick = (e, { name }) => {
@@ -37,7 +42,7 @@ export default class MenuLayout extends Component {
   };
 
   render() {
-    const { activeItem } = this.state;
+    const { activeItem, username } = this.state;
     return (
       <div>
         <Menu borderless fixed="top" style={fixedMenuStyle}>
@@ -48,27 +53,35 @@ export default class MenuLayout extends Component {
               </Button>
               <span className={"TitleStyle"}>rxGeoBI</span>
             </Menu.Item>
-            
+
             <Menu.Item
               name="search"
               style={{ margin: "0.9em" }}
-              position="right">
+              position="right"
+            >
               <GeoBISearch />
             </Menu.Item>
 
             <Menu.Item
-              name="inbox"
-              active={activeItem === "inbox"}
+              name="alerts"
+              active={activeItem === "alerts"}
               onClick={this.handleItemClick}
               style={{ margin: "0.9em" }}
-              position="right">
-              <Icon name="envelope">
-                <Label color="teal" floating>
+              position="right"
+            >
+              <Icon name="bell" size={"large"}>
+                <Label
+                  circular
+                  color="teal"
+                  size={"mini"}
+                  attached={"top right"}
+                >
                   1
                 </Label>
               </Icon>
             </Menu.Item>
-            
+
+            <UserDetails username={username} />
           </Container>
         </Menu>
       </div>
